@@ -1,2 +1,0 @@
-[openclaw.skills]
-memory_guard = xclaw_ag_memory_guard:MemoryGuardSkill

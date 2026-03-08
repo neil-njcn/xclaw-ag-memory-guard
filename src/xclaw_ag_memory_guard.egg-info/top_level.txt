@@ -1,1 +1,0 @@
-xclaw_ag_memory_guard
