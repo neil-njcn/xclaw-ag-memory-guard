@@ -110,8 +110,19 @@ class MemoryGuard:
         for name, detector in self._detectors.items():
             try:
                 detection = detector.detect(content)
-                if detection.get('detected', False):
+
+                # Handle DetectionResult object (from xclaw-agentguard-framework v2.3.1+)
+                # or dict (legacy compatibility)
+                if hasattr(detection, 'detected'):
+                    # DetectionResult object
+                    is_detected = detection.detected
+                    confidence = getattr(detection, 'confidence', 0.0)
+                else:
+                    # Legacy dict format
+                    is_detected = detection.get('detected', False)
                     confidence = detection.get('confidence', 0.0)
+
+                if is_detected:
                     max_confidence = max(max_confidence, confidence)
                     detected_issues.append({
                         'detector': name,
